@@ -1,0 +1,51 @@
+#ifndef _MOUSE_H_
+#define _MOUSE_H_
+
+//#include <lcom/lcf.h>
+
+/*subscribes mouse interruptions*/
+int subscribe_mouse(uint8_t *bit_no);
+
+/*unsubscribes mouse interruptions*/
+int unsubscribe_mouse();
+
+int disable_mouse();
+
+/*reads kbc status */
+int kbc_read_status(uint8_t * status);
+
+bool empty_obf();
+
+bool empty_ibf();
+
+int write_mouse_command(uint8_t command);
+
+int send_arg(uint8_t command);
+
+int mouse_set_stream_mode();
+
+int mouse_set_remote_mode();
+
+int mouse_enable_data_rep();
+
+int mouse_disable_data_rep();
+
+int clear_obf();
+
+uint16_t revert_2_complement_x(uint8_t num);
+
+uint16_t revert_2_complement_y(uint8_t num);
+
+int mouse_disable();
+
+int mouse_enable();
+
+void build_packet(struct packet * pac);
+
+int mouse_read_data();
+
+int write_kbc_command(uint8_t command);
+
+
+
+#endif

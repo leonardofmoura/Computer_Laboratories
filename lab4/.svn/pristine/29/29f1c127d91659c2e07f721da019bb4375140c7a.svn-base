@@ -1,0 +1,193 @@
+// IMPORTANT: you must include the following line in all your C files
+#include <lcom/lcf.h>
+
+#include <stdint.h>
+#include <stdio.h>
+
+#include "mouse.h"
+#include "mouse_macros.h"
+#include "mouse_state_machine.h"
+
+
+// Any header files included below this line should have been created by you
+
+extern struct packet pack;
+extern int byte_no;
+
+int main(int argc, char *argv[]) {
+  // sets the language of LCF messages (can be either EN-US or PT-PT)
+  lcf_set_language("EN-US");
+
+  // enables to log function invocations that are being "wrapped" by LCF
+  // [comment this out if you don't want/need/ it]
+  lcf_trace_calls("/home/lcom/labs/lab4/trace.txt");
+
+  // enables to save the output of printf function calls on a file
+  // [comment this out if you don't want/need it]
+  lcf_log_output("/home/lcom/labs/lab4/output.txt");
+
+  // handles control over to LCF
+  // [LCF handles command line arguments and invokes the right function]
+  if (lcf_start(argc, argv))
+    return 1;
+
+  // LCF clean up tasks
+  // [must be the last statement before return]
+  lcf_cleanup();
+
+  return 0;
+}
+
+
+int (mouse_test_packet)(uint32_t cnt) {
+
+    int ipc_status;
+    message msg;
+    uint8_t bit_no;
+    uint32_t r;
+    uint32_t irq_set = BIT(MOUSE_IRQ);
+
+    if (subscribe_mouse(&bit_no) != 0) {
+        return 1;
+    }
+
+    mouse_enable_data_rep();
+
+    while( cnt > 0 ) { /* You may want to use a different condition */
+        /* Get a request message. */
+        if ( (r = driver_receive(ANY, &msg, &ipc_status)) != 0 ) { 
+            printf("driver_receive failed with: %d", r);
+            continue;
+        }
+        if (is_ipc_notify(ipc_status)) { /* received notification */
+            switch (_ENDPOINT_P(msg.m_source)) {
+                case HARDWARE: /* hardware interrupt notification */
+                    if (msg.m_notify.interrupts & irq_set) { /* subscribed interrupt */
+
+                        mouse_ih();
+
+                        if (byte_no % 3 == 0) {
+                            
+                            build_packet(&pack);
+                            
+                            cnt--;
+                            mouse_print_packet(&pack);
+                            
+                            //printf("C:%d\n",cnt);
+                        } 
+
+                        //tickdelay(micros_to_ticks(DELAY_US));
+                        
+                    }
+                    break;
+                default:
+                    break; /* no other notifications expected: do nothing */ 
+            }
+        }
+        else {
+            /* received a standard message, not a notification */
+            /* no standard messages expected: do nothing */
+        }
+    }
+ 
+    if (mouse_disable_data_rep() != 0) {
+        printf("Could not disable data reporting\n");
+        return 1;
+    }
+
+    if (unsubscribe_mouse() != 0 ){
+        return 1;
+    }
+
+    printf("End\n");
+    return 0;
+    
+}
+
+
+int (mouse_test_remote)(uint16_t period, uint8_t cnt) {
+    //To be completed 
+    printf("%s(%u, %u): under construction\n", __func__, period, cnt);
+    return 1;
+}
+
+
+int (mouse_test_async)(uint8_t idle_time) {
+    /* To be completed */
+    printf("%s(%u): under construction\n", __func__, idle_time);
+    return 1;
+}
+
+
+int (mouse_test_gesture)(uint8_t x_len, uint8_t tolerance) {
+    
+    int ipc_status;
+    message msg;
+    uint8_t bit_no;
+    uint32_t r;
+    uint32_t irq_set = BIT(MOUSE_IRQ);
+
+    enum State current_mouse_state = INITIAL_STATE; 
+
+
+    if (subscribe_mouse(&bit_no) != 0) {
+        return 1;
+    }
+
+    mouse_enable_data_rep();
+
+    while(current_mouse_state != FINAL_STATE) { /* You may want to use a different condition */
+        /* Get a request message. */
+        if ( (r = driver_receive(ANY, &msg, &ipc_status)) != 0 ) { 
+            printf("driver_receive failed with: %d", r);
+            continue;
+        }
+        if (is_ipc_notify(ipc_status)) { /* received notification */
+            switch (_ENDPOINT_P(msg.m_source)) {
+                case HARDWARE: /* hardware interrupt notification */
+                    if (msg.m_notify.interrupts & irq_set) { /* subscribed interrupt */
+
+                        mouse_ih();
+
+                        if (byte_no % 3 == 0) {
+                            
+                            build_packet(&pack);
+                
+                            mouse_print_packet(&pack);
+
+                            current_mouse_state = run_state_machine(current_mouse_state,process_event(&pack,tolerance,x_len));
+
+                            printf("%d\n",current_mouse_state);
+                        } 
+
+                        //tickdelay(micros_to_ticks(DELAY_US));
+                        
+                    }
+                    break;
+                default:
+                    break; /* no other notifications expected: do nothing */ 
+            }
+        }
+        else {
+            /* received a standard message, not a notification */
+            /* no standard messages expected: do nothing */
+        }
+    }
+ 
+
+    if (mouse_disable_data_rep() != 0) {
+        printf("Could not disable data reporting\n");
+        return 1;
+    }
+
+    if (unsubscribe_mouse() != 0 ){
+        return 1;
+    }
+
+    printf("End\n");
+    return 0;
+    
+}
+
+
+

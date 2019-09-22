@@ -1,0 +1,36 @@
+#ifndef _MOUSE_MACROS_H
+#define _MOUSE_MACROS_H
+
+#define MOUSE_IRQ               12          //the mouse irq line
+
+#define BIT(n)                  (0x01<<(n))
+
+#define OUT_BUF                 0x60        //output buffer
+#define IN_BUF                  0x64        //input buffer
+
+#define STAT_REG                0x64        //status register
+#define KBC_CMD_REG             0x64        //command register
+#define KBC_ARGS_REG            0x60        //arguments register
+#define KBC_RET_REG             0x60        //return values register
+
+//mouse related KBC commands
+#define READ_CMD                0x20        //read command byte
+#define WRITE_CMD               0x60        //write command byte 
+#define MOUS_DISBL              0xA7        //disable mouse
+#define MOUSE_ENBL              0xA8        //enable mouse
+#define MOUSE_CHECK             0xA9        //check mouse 
+#define WRITE_MOUSE             0xD4        //write byte to mouse
+
+//status register 
+#define PARITY                  BIT(7)      //parity error
+#define TIMEOUT                 BIT(6)      //timeout error
+#define AUX                     BIT(5)      //mouse data
+#define INH                     BIT(4)      //inhibit flag : 0 if kbd inhibited
+#define A2                      BIT(3)      //a2 input line
+#define SYS                     BIT(2)      //system flag
+#define IBF                     BIT(1)      //input buffer - DONT WRITE COMMANDS OR ARGS
+#define OBF                     BIT(0)      //output buffer full 
+
+
+
+#endif
