@@ -23,9 +23,10 @@ This lab adresses the Video Card in Graphics Mode. We have to configure the Grap
 
 ## Proj - Foolish Chaos
 Foolish chaos is a roguelike arcade game. You play as the main character: *The Fool*. You spawn in a procedurely generated themed map and enemies are coming your way! You have to do whatever it takes to survive (i.e kill 'em all). The game engine is fully implemented, but we have some features planned we did not have the time to implement at the time of the project deadline. So, who knows? We might work on it again sometime!
+On an important note, all the sprites of the game are original creations of my partner João.
 
 
 
 **Note**:If find some mistake in this readme or any other part of this repo, feel free to tell me about it!
 
-*README version 1.0*
+*README version 1.1*
