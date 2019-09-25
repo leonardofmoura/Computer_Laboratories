@@ -3,7 +3,7 @@ Repository created for the LCOM course at FEUP.
 The course conssists of several labs that are developed during lab classes, more info on each lab can be found bellow.
 All the code in this repository was made strictly for educational purposes and you can use it as you please, just keep in mind I'm not responsibe for anything. If you are taking the LCOM course please keep in mind its strict policy in relation to copy. If you are taking the course and find yourself here in need for help, I recomend you check out my code (or any other student's) and try to figure out what's happening (using the lecture slides for example), then try to do it on your own way, using your own coding style. That's the only way you are really going to learn something! 
 
-**Everything developed during this course was done with the help of my partner** [João Ribeiro](github.com/Fujicsso)
+**Everything developed during this course was done with the help of my partner** [João Ribeiro](http://github.com/Fujicsso)
 
 ## Lab0 - Introduction
 This lab serves as quick introduction to the course and C programming. It is also serves as a first contact with the MINIX operating system and a version control system (in my case SVN).
@@ -22,7 +22,7 @@ This lab adresses the Video Card in Graphics Mode. We have to configure the Grap
 
 ## Proj - Foolish Chaos
 Foolish chaos is a roguelike arcade game. You play as the main character: *The Fool*. You spawn in a procedurely generated themed map and enemies are coming your way! You have to do whatever it takes to survive (i.e kill 'em all). The game engine is fully implemented, but we have some features planned we did not have the time to implement at the time of the project deadline. So, who knows? We might work on it again sometime!
-On an important note, all the sprites of the game are original creations of my partner [João](github.com/Fujicsso).
+On an important note, all the sprites of the game are original creations of my partner [João](https://github.com/Fujicsso).
 
 
 
