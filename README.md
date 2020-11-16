@@ -1,5 +1,5 @@
 # FEUP-LCOM
-Repository created for the LCOM course at FEUP.
+Repository created for the Computer Labs course at FEUP.
 The course conssists of several labs that are developed during lab classes, more info on each lab can be found bellow.
 All the code in this repository was made strictly for educational purposes and you can use it as you please, just keep in mind I'm not responsibe for anything. If you are taking the LCOM course please keep in mind its strict policy in relation to copy. If you are taking the course and find yourself here in need for help, I recomend you check out my code (or any other student's) and try to figure out what's happening (using the lecture slides for example), then try to do it on your own way, using your own coding style. That's the only way you are really going to learn something! 
 
