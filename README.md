@@ -26,6 +26,6 @@ On an important note, all the sprites of the game are original creations of my p
 
 
 
-**Note**:If find some mistake in this readme or any other part of this repo, feel free to tell me about it!
+**Note**: If you find some mistake in this readme or any other part of this repo, feel free to tell me about it!
 
 *README version 1.2*
